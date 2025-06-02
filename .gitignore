@@ -2,3 +2,5 @@ backend/node_modules/
 .npm
 package-lock.json
 .vscode/
+uploads/
+backend/data/fabrics.json

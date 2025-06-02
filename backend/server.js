@@ -83,7 +83,9 @@ app.get('/fabrics', (req, res) => {
       (f.color && f.color.toLowerCase().includes(search)) ||
       (f.tags && f.tags.some(tag => tag.toLowerCase().includes(search))) ||
       (f.length != null && f.length.toString().includes(search)) ||
-      (f.width != null && f.width.toString().includes(search))
+      (f.width != null && f.width.toString().includes(search)) ||
+      (f.notes && f.notes.toLowerCase().includes(search)) ||
+      (f.location && f.location.toLowerCase().includes(search))  // idk if this is useful, but why not :3
     );
     return res.json(filtered);
   }
@@ -95,7 +97,7 @@ app.get('/fabrics', (req, res) => {
 app.post('/fabrics', preProcessForm, upload.single('image'), async (req, res) => {
   try {
     const fabrics = readFabrics();
-    const { name, type, color, tags, length, width, notes } = req.body;
+    const { name, type, color, tags, length, width, notes, location } = req.body;
 
     if (!name || !type) {
       return res.status(400).json({ error: 'Name and Type are required' });
@@ -148,6 +150,7 @@ app.post('/fabrics', preProcessForm, upload.single('image'), async (req, res) =>
       length: isNaN(parsedLength) ? null : parsedLength,
       width: isNaN(parsedWidth) ? null : parsedWidth,
       notes: notes?.trim() || '',
+      location: location?.trim() || '',  // New location property :3
       image: imagePath
     };
 
@@ -200,7 +203,8 @@ app.put('/fabrics/:id', (req, res) => {
     ...req.body,
     length: req.body.length !== undefined ? parseFloat(req.body.length) : fabric.length,
     width: req.body.width !== undefined ? parseFloat(req.body.width) : fabric.width,
-    tags: req.body.tags ? req.body.tags.split(',').map(t => t.trim()).filter(Boolean) : fabric.tags
+    tags: req.body.tags ? req.body.tags.split(',').map(t => t.trim()).filter(Boolean) : fabric.tags,
+    location: req.body.location !== undefined ? req.body.location.trim() : fabric.location  // Handle location update :3
   };
 
   fabrics[fabricIndex] = updated;

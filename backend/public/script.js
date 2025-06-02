@@ -19,6 +19,7 @@ const modalColor = document.getElementById('modalColor');
 const modalDimensions = document.getElementById('modalDimensions');
 const modalTags = document.getElementById('modalTags');
 const modalNotes = document.getElementById('modalNotes');
+const modalLocation = document.getElementById('modalLocation');
 
 let fabrics = [];
 let isEditing = false;
@@ -89,6 +90,7 @@ function resetModal() {
   modalDimensions.textContent = '';
   modalTags.textContent = '';
   modalNotes.textContent = '';
+  if (modalLocation) modalLocation.textContent = '';
 }
 
 function openModal(idx) {
@@ -106,6 +108,7 @@ function openModal(idx) {
   modalDimensions.textContent = (fabric.length && fabric.width) ? `${fabric.length}m x ${fabric.width}m` : '-';
   modalTags.textContent = (fabric.tags && fabric.tags.length) ? fabric.tags.join(', ') : '-';
   modalNotes.textContent = fabric.notes || '-';
+  if (modalLocation) modalLocation.textContent = fabric.location || '-';
 
   const controls = fabricModal.querySelector('.modal-controls');
   controls.innerHTML = '';
@@ -145,6 +148,7 @@ function toggleEdit() {
     modalDimensions.innerHTML = '';
     modalTags.innerHTML = '';
     modalNotes.innerHTML = '';
+    if (modalLocation) modalLocation.innerHTML = '';
 
     const nameInput = makeInput(fabric.name, 'editName');
     const typeInput = makeInput(fabric.type, 'editType');
@@ -162,6 +166,7 @@ function toggleEdit() {
 
     const tagsInput = makeInput(fabric.tags ? fabric.tags.join(', ') : '', 'editTags');
     const notesInput = makeTextarea(fabric.notes, 'editNotes');
+    const locationInput = makeInput(fabric.location || '', 'editLocation');
 
     modalName.appendChild(nameInput);
     modalType.appendChild(typeInput);
@@ -169,6 +174,7 @@ function toggleEdit() {
     modalDimensions.appendChild(dimWrapper);
     modalTags.appendChild(tagsInput);
     modalNotes.appendChild(notesInput);
+    modalLocation.appendChild(locationInput);
 
     const controls = fabricModal.querySelector('.modal-controls');
     controls.innerHTML = '';
@@ -200,6 +206,7 @@ async function saveChanges() {
     width: document.getElementById('editWidth').value.trim(),
     tags: document.getElementById('editTags').value.trim(),
     notes: document.getElementById('editNotes').value.trim(),
+    location: document.getElementById('editLocation').value.trim(),
   };
 
   try {

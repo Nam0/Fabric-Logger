@@ -32,6 +32,7 @@
         <input name="tags" placeholder="Tags (comma separated)" class="border rounded px-3 py-2" />
         <input name="length" placeholder="Length (meters)" type="number" step="0.01" class="border rounded px-3 py-2" />
         <input name="width" placeholder="Width (meters)" type="number" step="0.01" class="border rounded px-3 py-2" />
+        <input name="location" placeholder="Location" class="border rounded px-3 py-2" />
         <input name="image" type="file" accept="image/*" class="col-span-2" />
         <textarea name="notes" placeholder="Notes" class="border rounded px-3 py-2 col-span-2" rows="3"></textarea>
       </div>
@@ -68,6 +69,10 @@
             <div id="modalDimensions"></div>
           </div>
           <div>
+            <h3 class="font-semibold">Location:</h3>
+            <div id="modalLocation"></div>
+          </div>
+          <div>
             <h3 class="font-semibold">Tags:</h3>
             <div id="modalTags"></div>
           </div>
@@ -83,6 +88,31 @@
   </div>
 
   <script src="script.js"></script>
+
+  <script>
+    // Prevent pinch zoom
+    document.addEventListener('touchmove', function (e) {
+      if (e.scale !== 1) {
+        e.preventDefault();
+      }
+    }, { passive: false });
+
+    // Prevent double-tap zoom
+    let lastTouchEnd = 0;
+    document.addEventListener('touchend', function (e) {
+      const now = Date.now();
+      if (now - lastTouchEnd <= 300) {
+        e.preventDefault();
+      }
+      lastTouchEnd = now;
+    }, false);
+
+    // Block iOS-specific zoom gestures
+    document.addEventListener('gesturestart', e => e.preventDefault());
+    document.addEventListener('gesturechange', e => e.preventDefault());
+    document.addEventListener('gestureend', e => e.preventDefault());
+  </script>
+
 </body>
 
 </html>
