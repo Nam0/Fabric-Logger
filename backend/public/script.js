@@ -1,7 +1,7 @@
 /* script.js */
 
 // Backend API base URL
-const backendURL = 'http://localhost:3000';
+const backendURL = `${window.location.protocol}//${window.location.hostname}:3000`;
 
 const form = document.getElementById('fabricForm');
 const fabricGrid = document.getElementById('fabricGrid');

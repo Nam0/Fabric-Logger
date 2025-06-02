@@ -208,6 +208,6 @@ app.put('/fabrics/:id', (req, res) => {
   res.json(updated);
 });
 
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`Fabric Logger running at http://localhost:${PORT}`);
 });
