@@ -1,0 +1,87 @@
+<!-- index.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fabric Logger</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <link href="./style.css" rel="stylesheet" />
+  <link rel="icon" type="image/x-icon" href="/images/Freg.ico">
+</head>
+
+<body class="bg-gray-50 p-6">
+
+  <div class="max-w-4xl mx-auto">
+    <h1 class="text-3xl font-bold mb-6">Fabric Logger</h1>
+
+    <div class="flex gap-2 mb-4">
+      <input id="search" type="text" placeholder="Search fabrics..." class="border rounded px-3 py-2 flex-grow" />
+      <button id="searchBtn" class="bg-blue-600 text-white px-4 rounded hover:bg-blue-700">Search</button>
+      <button id="toggleFormBtn" class="bg-green-600 text-white px-4 rounded hover:bg-green-700">Add Fabric</button>
+    </div>
+
+    <form id="fabricForm" class="mb-6 hidden bg-white p-4 rounded shadow" enctype="multipart/form-data">
+      <div class="grid grid-cols-2 gap-4">
+        <input name="name" placeholder="Name (required)" required class="border rounded px-3 py-2" />
+        <input name="type" placeholder="Type (required)" required class="border rounded px-3 py-2" />
+        <input name="color" placeholder="Color" class="border rounded px-3 py-2" />
+        <input name="tags" placeholder="Tags (comma separated)" class="border rounded px-3 py-2" />
+        <input name="length" placeholder="Length (meters)" type="number" step="0.01" class="border rounded px-3 py-2" />
+        <input name="width" placeholder="Width (meters)" type="number" step="0.01" class="border rounded px-3 py-2" />
+        <input name="image" type="file" accept="image/*" class="col-span-2" />
+        <textarea name="notes" placeholder="Notes" class="border rounded px-3 py-2 col-span-2" rows="3"></textarea>
+      </div>
+      <button type="submit" class="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Add Fabric</button>
+    </form>
+
+    <div id="fabricGrid" class="grid grid-cols-3 gap-4"></div>
+  </div>
+
+  <!-- Modal -->
+  <div id="fabricModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center p-4 z-50">
+    <div class="bg-white rounded shadow-lg max-w-xl w-full p-6 relative">
+      <button id="closeModal"
+        class="absolute top-2 right-2 text-gray-500 hover:text-gray-700 text-2xl font-bold">&times;</button>
+
+      <div class="flex flex-col md:flex-row gap-6">
+        <img id="modalImage" src="" alt="Fabric Image" class="mx-auto md:mx-0" />
+
+        <div class="flex-1 space-y-2">
+          <div>
+            <h2 class="font-semibold">Name:</h2>
+            <div id="modalName" class="text-lg"></div>
+          </div>
+          <div>
+            <h3 class="font-semibold">Type:</h3>
+            <div id="modalType"></div>
+          </div>
+          <div>
+            <h3 class="font-semibold">Color:</h3>
+            <div id="modalColor"></div>
+          </div>
+          <div>
+            <h3 class="font-semibold">Dimensions:</h3>
+            <div id="modalDimensions"></div>
+          </div>
+          <div>
+            <h3 class="font-semibold">Tags:</h3>
+            <div id="modalTags"></div>
+          </div>
+          <div>
+            <h3 class="font-semibold">Notes:</h3>
+            <div id="modalNotes" class="whitespace-pre-wrap"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-controls flex justify-end gap-2 mt-6 border-t pt-4"></div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
